@@ -54,8 +54,10 @@ gf16_mul.update({
 
 # Executa MixColumns na matriz de estado (multiplicação matricial no GF(2^4))
 def mix_columns(state_matrix):
-    result = [[0, 0], [0, 0]]
-    for c in range(2):  # para cada coluna
+
+    result = [['0', '0'], ['0', '0']]
+    for c in range(2):
+
         a = int(state_matrix[0][c], 2)
         b = int(state_matrix[1][c], 2)
         # Realiza multiplicações e XORs conforme matriz padrão do S-AES
@@ -129,18 +131,20 @@ def cipher_block(plaintext_bin, round_keys):
     # Retorna o texto cifrado como string binária
     return ''.join([nib for row in state for nib in row])
 
-# --- Função principal ---
-def main():
-    plaintext = "ok"  # Texto original (máx. 2 caracteres para 16 bits)
-    key_str = "1010010111110000"  # Chave de 16 bits (fixa ou gerada)
 
-    # 1. Converte texto para binário (2 caracteres = 16 bits)
+# Função principal
+def aes_encrypt_sequence(plaintext, key):
+    
+    # 1. Converter texto para binário
+
     plaintext_bin = string_to_binary(plaintext[:2])
-    print("Texto original:", plaintext)
+    print(f'Texto original: "{plaintext}"')
     print("Texto binário:", plaintext_bin)
 
-    # 2. Expande a chave em 6 palavras de 8 bits
-    round_keys = key_expansion(key_str)
+
+    # 2. Gerar round keys a partir da chave
+    round_keys = key_expansion(key)
+
 
     # 3. Executa cifragem com 3 rodadas do S-AES
     ciphertext_bin = cipher_block(plaintext_bin, round_keys)
@@ -149,7 +153,9 @@ def main():
     print("Cifra (bin):", ciphertext_bin)
     print("Cifra (hex):", binary_to_hex(ciphertext_bin))
     print("Cifra (b64):", binary_to_base64(ciphertext_bin))
+    print()
+    return (ciphertext_bin, binary_to_hex(ciphertext_bin), binary_to_base64(ciphertext_bin))
 
 # --- Executa a função principal se for o script principal ---
 if __name__ == "__main__":
-    main()
+    aes_encrypt_sequence("ok", "1010110010101100")

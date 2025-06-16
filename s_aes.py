@@ -119,7 +119,7 @@ def aes_encrypt_sequence(plaintext, key):
     
     # 1. Converter texto para binário
     plaintext_bin = string_to_binary(plaintext[:2])
-    print("Texto original:", plaintext)
+    print(f'Texto original: "{plaintext}"')
     print("Texto binário:", plaintext_bin)
 
     # 2. Gerar round keys a partir da chave
@@ -130,10 +130,11 @@ def aes_encrypt_sequence(plaintext, key):
 
     # 4. Exibir saída
     print("Cifra (bin):", ciphertext_bin)
-    return ciphertext_bin
-    # print("Cifra (hex):", binary_to_hex(ciphertext_bin))
-    # print("Cifra (b64):", binary_to_base64(ciphertext_bin))
+    print("Cifra (hex):", binary_to_hex(ciphertext_bin))
+    print("Cifra (b64):", binary_to_base64(ciphertext_bin))
+    print()
+    return (ciphertext_bin, binary_to_hex(ciphertext_bin), binary_to_base64(ciphertext_bin))
 
 # --- Executa ---
 if __name__ == "__main__":
-    aes_encrypt_sequence("ok", "1010010111110000")
+    aes_encrypt_sequence("ok", "1010110010101100")

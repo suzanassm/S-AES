@@ -45,7 +45,7 @@ gf16_mul.update({
 })
 
 def mix_columns(state_matrix):
-    result = [[0, 0], [0, 0]]
+    result = [['0', '0'], ['0', '0']]
     for c in range(2):
         a = int(state_matrix[0][c], 2)
         b = int(state_matrix[1][c], 2)
@@ -115,26 +115,25 @@ def cipher_block(plaintext_bin, round_keys):
     return ''.join([nib for row in state for nib in row])
 
 # Função principal
-def main():
-    plaintext = "ok"
-    key_str = "1010010111110000"  # 16 bits (pode ser randomizada ou pedida ao usuário)
-
+def aes_encrypt_sequence(plaintext, key):
+    
     # 1. Converter texto para binário
     plaintext_bin = string_to_binary(plaintext[:2])
     print("Texto original:", plaintext)
     print("Texto binário:", plaintext_bin)
 
     # 2. Gerar round keys a partir da chave
-    round_keys = key_expansion(key_str)
+    round_keys = key_expansion(key)
 
     # 3. Cifrar
     ciphertext_bin = cipher_block(plaintext_bin, round_keys)
 
     # 4. Exibir saída
     print("Cifra (bin):", ciphertext_bin)
-    print("Cifra (hex):", binary_to_hex(ciphertext_bin))
-    print("Cifra (b64):", binary_to_base64(ciphertext_bin))
+    return ciphertext_bin
+    # print("Cifra (hex):", binary_to_hex(ciphertext_bin))
+    # print("Cifra (b64):", binary_to_base64(ciphertext_bin))
 
 # --- Executa ---
 if __name__ == "__main__":
-    main()
+    aes_encrypt_sequence("ok", "1010010111110000")
